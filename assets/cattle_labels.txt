@@ -1,0 +1,5 @@
+ear
+eye
+horn
+muzzle
+tag
