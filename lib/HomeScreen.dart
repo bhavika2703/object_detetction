@@ -1,11 +1,12 @@
 // ignore: file_names
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rampsure/camera_capture.dart';
 import 'package:flutter_rampsure/captures.dart';
 import 'package:flutter_rampsure/yolovideo.dart';
 
 import 'package:flutter_vision/flutter_vision.dart';
+
+import 'capture_view/camera_capture.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -127,8 +128,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (_) => CameraCaptureScreen(
+                                builder: (_) => CameraCaptureViewScreen(
                                       vision: vision, cameras: widget.cameras,
+                                  captureImageFiles: (captureImage) {
+
+                                  },
                                     )));
                       },
                       child:  SizedBox(

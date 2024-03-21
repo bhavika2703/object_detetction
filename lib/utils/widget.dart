@@ -1,10 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'dart:io';
-import 'dart:ui' as ui;
-import 'package:image/image.dart' as  imglib;
-import 'package:image/src/color/color.dart' as icolor;
+import 'package:flutter_rampsure/utils/app_colors.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 
 
@@ -76,8 +74,27 @@ class utils{
   
   }
 
+ showToast(
+     {required String message,
+       required ToastGravity gravity,
+       required FToast fToast,
+       int duration = 1}) {
+   fToast.showToast(
+     child: Container(
+         padding: const EdgeInsets.all(6),
+         decoration: BoxDecoration(
+           color: AppColors.appBrown,
+           borderRadius: BorderRadius.circular(8.0),
+         ),
+         child: Text(message, style: const TextStyle(color: Colors.white))),
+     gravity: gravity,
+     toastDuration: Duration(seconds: duration),
+   );
+ }
 
-  // ignore: non_constant_identifier_names
+
+
+ // ignore: non_constant_identifier_names
   SnakBarView(BuildContext context,String message){
   return  ScaffoldMessenger.of(context).showSnackBar(
                          SnackBar(
@@ -88,7 +105,7 @@ class utils{
   }
 
 
-  thumnailView(File? clickImageFile,videoController,VideoPlayer){
+  thumbnailView(File? clickImageFile,videoController,VideoPlayer){
     Container(
       width: 60,
       height: 60,
@@ -98,7 +115,7 @@ class utils{
         border: Border.all(color: Colors.white, width: 2),
         image: clickImageFile != null
             ? DecorationImage(
-          image: FileImage(clickImageFile!),
+          image: FileImage(clickImageFile),
           fit: BoxFit.cover,
         )
             : null,
