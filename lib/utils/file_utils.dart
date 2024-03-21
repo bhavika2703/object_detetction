@@ -33,7 +33,7 @@ class FileUtils {
     return Directory(appMediaDirPath);
   }
 
-    Future<String> getMediaDirectoryPath({
+  Future<String> getMediaDirectoryPath({
     required String mediaDirName,
   }) async {
     Directory? _dir;
@@ -54,13 +54,13 @@ class FileUtils {
     }
   }
 
-    Future<String> _getDestinationDirectory() async {
-    
-        const String contentDir ='insignia images';
-        return await getMediaDirectoryPath(mediaDirName: contentDir);
-    
+  Future<String> _getDestinationDirectory({required String folderName}) async {
+
+    String contentDir = folderName;
+    return await getMediaDirectoryPath(mediaDirName: contentDir);
+
   }
-    static String trimString(
+  static String trimString(
       {required String originText, required int maxLength}) {
     if (originText.length > maxLength) {
       return originText.substring(0, maxLength);
@@ -68,9 +68,9 @@ class FileUtils {
 
     return originText;
   }
- 
 
-   String _generateMediaFileName({
+
+  String _generateMediaFileName({
     required String originFileName,
     required String filePath,
   }) {
@@ -82,11 +82,23 @@ class FileUtils {
     return generatedFilePath;
   }
 
+  String _generateVideoFileName({
+    required String originFileName,
+    required String filePath,
+  }) {
+    final String fileName = trimString(originText: originFileName, maxLength: 60);
+
+    final String extension =  '.mp4';
+    final String generatedFilePath = '$fileName$extension';
+
+    return generatedFilePath;
+  }
+
   Future<String> mediaFilesForMobile(
-    {required String sourceFilePath,
-    required String msgFileName,}
-  ) async {
-    final String destinationDirPath = await _getDestinationDirectory();
+      {required String sourceFilePath,
+        required String msgFileName,}
+      ) async {
+    final String destinationDirPath = await _getDestinationDirectory(folderName: 'rampSure_images');
 
     final String _mediaGeneratedFileName = _generateMediaFileName(
       filePath: sourceFilePath,
@@ -97,8 +109,29 @@ class FileUtils {
         destinationDirPath + '/$_mediaGeneratedFileName';
 
     final File updatedFile = File(sourceFilePath).copySync(destinationFilePath);
-      await ImageGallerySaver.saveFile(updatedFile.path);
-    
+    await ImageGallerySaver.saveFile(updatedFile.path);
+
     return updatedFile.path;
   }
+
+  Future<String> videoFileSave(
+      {required String sourceFilePath,
+        required String msgFileName,}
+      ) async {
+    final String destinationDirPath = await _getDestinationDirectory(folderName:' rampSure_videos');
+
+    final String _mediaGeneratedFileName = _generateVideoFileName(
+      filePath: sourceFilePath,
+      originFileName: msgFileName,
+    );
+
+    final String destinationFilePath =
+        destinationDirPath + '/$_mediaGeneratedFileName';
+
+    final File updatedFile = File(sourceFilePath).copySync(destinationFilePath);
+    await ImageGallerySaver.saveFile(updatedFile.path);
+
+    return updatedFile.path;
+  }
+
 }

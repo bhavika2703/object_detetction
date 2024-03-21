@@ -2,11 +2,11 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rampsure/captures.dart';
-import 'package:flutter_rampsure/yolovideo.dart';
 
 import 'package:flutter_vision/flutter_vision.dart';
 
 import 'capture_view/camera_capture.dart';
+import 'video_recoding_view/camera_frame.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -155,8 +155,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (_) => YoloVideo(
+                                builder: (_) => VideoFrameViewScreen(
                                       vision: vision,
+                                      captureVideoFile: (captureVideo) {},
                                       cameras: widget.cameras,
                                     )));
                       },
